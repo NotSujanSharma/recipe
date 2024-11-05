@@ -21,7 +21,7 @@ export const AuthProvider = ({ children }) => {
       formData.append('username', username);
       formData.append('password', password);
 
-      const response = await fetch('https://api.bigcityops.ca//token', {
+      const response = await fetch('https://api.bigcityops.ca/token', {
         method: 'POST',
         body: formData,
       });
