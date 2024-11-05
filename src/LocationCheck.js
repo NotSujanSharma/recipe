@@ -14,7 +14,7 @@ const LocationCheck = ({ children }) => {
                 });
 
                 // Send location to backend
-                const response = await fetch('http://ak.coitus.ca:9292/api/verify-location', {
+                const response = await fetch('https://api.bigcityops.ca/api/verify-location', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
