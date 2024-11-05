@@ -18,7 +18,7 @@ const sampleRecipes = [
       "½ cup celery, chopped",
       "½ cup sweet pickles, chopped",
     ],
-    steps: [""],
+    steps: [],
   },
   {
     id: 2,
@@ -35,7 +35,7 @@ const sampleRecipes = [
       "1 ts Sugar",
       "1 ½ ts cornstarch",
     ],
-    steps: [""],
+    steps: [],
   },
   {
     id: 3,
@@ -77,7 +77,7 @@ const sampleRecipes = [
       "5 cups flour",
       "Cinnamon sugar",
     ],
-    steps: [""],
+    steps: [],
   },
   {
     id: 5,
@@ -92,7 +92,7 @@ const sampleRecipes = [
       "2 tb Dijon mustard",
       "2 tsp lea and perrin",
     ],
-    steps: [""],
+    steps: [],
   },
   {
     id: 6,
@@ -135,7 +135,7 @@ const sampleRecipes = [
       "Salt 1 tspn",
       "Pepper 1 tspn",
     ],
-    steps: [""],
+    steps: [],
   },
   {
     id: 8,
@@ -178,7 +178,7 @@ const sampleRecipes = [
       "Yeast 2 tsp",
       "Season with herbs and sea salt, bake at 350 until lightly toasted",
     ],
-    steps: [""],
+    steps: [],
   },
   {
     id: 10,
@@ -209,7 +209,7 @@ const sampleRecipes = [
       "1 lb pressed cottage cheese or quark cheese (filling)",
       "½ lb cream cheese (filling)",
     ],
-    steps: [""],
+    steps: [],
   },
   {
     id: 12,
@@ -224,7 +224,7 @@ const sampleRecipes = [
       "Ground cumin 1 ts",
       "Ground fennel ½ ts",
     ],
-    steps: [""],
+    steps: [],
   },
   {
     id: 13,
@@ -239,7 +239,7 @@ const sampleRecipes = [
       "¾ ts salt",
       "Black pepper",
     ],
-    steps: [""],
+    steps: [],
   },
 ];
 
