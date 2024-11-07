@@ -4,8 +4,9 @@ import { AuthProvider, useAuth } from './AuthContext';
 import Login from './Login';
 import RecipeList from './RecipeList';
 import LocationCheck from './LocationCheck';
+import Home from './Home';
 
-const LoginRoute = ({children}) => {
+const LoginRoute = ({ children }) => {
     const { token } = useAuth();
     if (token) {
         return <Navigate to="/recipes" />;
@@ -13,7 +14,7 @@ const LoginRoute = ({children}) => {
     return children
 }
 
-const PrivateRoute = ({children }) => {
+const PrivateRoute = ({ children }) => {
     const { token, isLoading } = useAuth();
 
     if (isLoading) {
@@ -46,6 +47,11 @@ const App = () => {
                             </PrivateRoute>
                         }
                     />
+                    <Route path="/home" element={
+                        <PrivateRoute>
+                            <Home />
+                        </PrivateRoute>
+                    } />
                     <Route path="/" element={<Navigate to="/recipes" />} />
                 </Routes>
             </Router>
