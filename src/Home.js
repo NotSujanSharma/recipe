@@ -11,7 +11,7 @@ const Home = () => {
                     Big City Catering
                 </h1>
                 <div className="mb-6 flex flex-row">
-                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
+                    <div className="grid grid-cols-2 md:grid-cols-3 gap-6 lg:grid-flow-col lg:auto-cols-max">
                         <div
                             className="bg-white border border-[#CCCCCC] rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200 cursor-pointer"
                             onClick={() => navigate('/recipes')}

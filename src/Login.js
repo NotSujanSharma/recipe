@@ -15,7 +15,7 @@ const Login = () => {
 
         const success = await login(username, password);
         if (success) {
-            navigate('/recipes');
+            navigate('/home');
         } else {
             setError('Invalid username or password');
         }
@@ -73,7 +73,7 @@ const Login = () => {
                     </button>
                 </form>
 
-                
+
             </div>
         </div>
     );

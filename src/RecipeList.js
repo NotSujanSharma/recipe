@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import RecipeSearchAutocomplete from './RecipeSearchAutocomplete';
 
 import './RecipeList.css';
 
@@ -38,7 +39,6 @@ const RecipeList = () => {
 
     return searchWords.every(word => recipeTitle.includes(word));
   });
-
 
 
   const handlePrint = (recipe) => {
@@ -132,13 +132,7 @@ const RecipeList = () => {
         </h1>
 
         <div className="mb-6">
-          <input
-            type="text"
-            placeholder="Search recipes..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
-          />
+          <RecipeSearchAutocomplete recipes={filteredRecipes} onSearch={setSearchTerm} />
         </div>
 
         <div className="mb-8">
