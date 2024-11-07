@@ -75,7 +75,7 @@ const RecipeList = () => {
           <div className="p-6">
             <h2 className="text-2xl font-bold mb-4">{recipe.name}</h2>
             <div className="mb-4">
-              {recipe.photo && (
+              {recipe.photo !== "null" && (
                 <img
                   src={recipe.photo}
                   alt={recipe.name}
