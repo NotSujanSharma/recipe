@@ -5,8 +5,8 @@ const Home = () => {
     const navigate = useNavigate();
 
     return (
-        <div className="container mx-auto px-4 py-8 max-w-6xl">
-            <div className="bg-[#F5F5F5] rounded-lg shadow-lg p-6">
+        <div className="bg-[#F5F5F5] container mx-auto px-4 py-8 max-w-6xl">
+            <div className=" rounded-lg shadow-lg h-[100vh] p-6">
                 <h1 className="text-3xl font-bold text-center mb-8 text-[#333333]">
                     Big City Catering
                 </h1>
@@ -48,6 +48,19 @@ const Home = () => {
                             <div className="p-4">
                                 <h3 className="text-xl font-semibold text-[#333333] mb-2">
                                     Guides
+                                </h3>
+                            </div>
+                        </div>
+                        <div
+                            className="bg-white border border-[#CCCCCC] rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200 cursor-pointer"
+                            onClick={() => navigate('/policies')}
+                        >
+                            <div className="overflow-hidden rounded-t-lg">
+                                <img src="https://www.assentriskmanagement.co.uk/wp-content/uploads/2023/10/Which-Policies-do-I-need-to-Display-on-my-Website-scaled.jpeg" className="h-[150px]" alt="Guides" />
+                            </div>
+                            <div className="p-4">
+                                <h3 className="text-xl font-semibold text-[#333333] mb-2">
+                                    Policies
                                 </h3>
                             </div>
                         </div>

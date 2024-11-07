@@ -52,7 +52,7 @@ const App = () => {
                             <Home />
                         </PrivateRoute>
                     } />
-                    <Route path="/" element={<Navigate to="/recipes" />} />
+                    <Route path="/" element={<Navigate to="/home" />} />
                 </Routes>
             </Router>
         </AuthProvider>
