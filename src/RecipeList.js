@@ -30,15 +30,16 @@ const RecipeList = () => {
     fetchRecipes();
   }, []);
 
-  // Get unique categories from the fetched data
   const categories = ["All", ...new Set(recipes.map(recipe => recipe.category))];
 
-  // Filter recipes based on search term and selected category
   const filteredRecipes = recipes.filter(recipe => {
-    const searchMatch = recipe.name.toLowerCase().includes(searchTerm.toLowerCase());
-    const categoryMatch = selectedCategory === "All" || recipe.category === selectedCategory;
-    return searchMatch && categoryMatch;
+    const searchWords = searchTerm.toLowerCase().split(" ");
+    const recipeTitle = recipe.name.toLowerCase();
+
+    return searchWords.every(word => recipeTitle.includes(word));
   });
+
+
 
   const handlePrint = (recipe) => {
     const printWindow = window.open("", "_blank");
