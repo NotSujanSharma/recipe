@@ -74,6 +74,15 @@ const RecipeList = () => {
         <div className="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
           <div className="p-6">
             <h2 className="text-2xl font-bold mb-4">{recipe.name}</h2>
+            <div className="mb-4">
+              {recipe.photo && (
+                <img
+                  src={recipe.photo}
+                  alt={recipe.name}
+                  className="max-w-full h-auto rounded-md"
+                />
+              )}
+            </div>
             <div
               className="recipe-content"
               dangerouslySetInnerHTML={{ __html: recipe.file }}
