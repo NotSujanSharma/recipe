@@ -1,4 +1,3 @@
-// AuthContext.js
 import React, { createContext, useState, useContext, useEffect } from 'react';
 
 const AuthContext = createContext(null);
@@ -6,13 +5,46 @@ const AuthContext = createContext(null);
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(localStorage.getItem('token'));
+  const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    if (token) {
-      localStorage.setItem('token', token);
-    } else {
+  const verifyToken = async (authToken) => {
+    if (!authToken) return false;
+    try {
+      const response = await fetch('https://api.bigcityops.ca/verify-token', {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${authToken}`,
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (!response.ok) {
+        throw new Error('Token invalid');
+      }
+
+      const data = await response.json();
+      // The response will contain the user object directly
+      setUser(data.user); // Will contain id, email, username, is_superuser
+      return true;
+    } catch (error) {
+      console.error('Token verification failed:', error);
+      setToken(null);
       localStorage.removeItem('token');
+      return false;
     }
+  };
+
+  // Verify token on initial load and when token changes
+  useEffect(() => {
+    const validateToken = async () => {
+      setIsLoading(true);
+      if (token) {
+        await verifyToken(token);
+      }
+      setIsLoading(false);
+    };
+
+    validateToken();
   }, [token]);
 
   const login = async (username, password) => {
@@ -32,6 +64,7 @@ export const AuthProvider = ({ children }) => {
 
       const data = await response.json();
       setToken(data.access_token);
+      localStorage.setItem('token', data.access_token);
       setUser({ username });
       return true;
     } catch (error) {
@@ -43,10 +76,15 @@ export const AuthProvider = ({ children }) => {
   const logout = () => {
     setToken(null);
     setUser(null);
+    localStorage.removeItem('token');
   };
 
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
   return (
-    <AuthContext.Provider value={{ user, token, login, logout }}>
+    <AuthContext.Provider value={{ user, token, login, logout, verifyToken, isLoading }}>
       {children}
     </AuthContext.Provider>
   );

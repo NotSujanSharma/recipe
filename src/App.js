@@ -6,10 +6,16 @@ import RecipeList from './RecipeList';
 import LocationCheck from './LocationCheck';
 
 const PrivateRoute = ({ children }) => {
-    const { token } = useAuth();
+    const { token, isLoading } = useAuth();
+
+    if (isLoading) {
+        return <div>Loading...</div>;
+    }
+
     if (!token) {
         return <Navigate to="/login" />;
     }
+
     return <LocationCheck>{children}</LocationCheck>;
 };
 
