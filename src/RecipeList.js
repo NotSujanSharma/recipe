@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
+import './RecipeList.css';
+
 const RecipeList = () => {
   const [recipes, setRecipes] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
