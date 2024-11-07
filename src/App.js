@@ -5,7 +5,15 @@ import Login from './Login';
 import RecipeList from './RecipeList';
 import LocationCheck from './LocationCheck';
 
-const PrivateRoute = ({ children }) => {
+const LoginRoute = ({children}) => {
+    const { token } = useAuth();
+    if (token) {
+        return <Navigate to="/recipes" />;
+    }
+    return children
+}
+
+const PrivateRoute = ({children }) => {
     const { token, isLoading } = useAuth();
 
     if (isLoading) {
@@ -24,7 +32,12 @@ const App = () => {
         <AuthProvider>
             <Router>
                 <Routes>
-                    <Route path="/login" element={<Login />} />
+                    <Route path="/login" element={
+                        <LoginRoute>
+
+                            <Login />
+                        </LoginRoute>
+                    } />
                     <Route
                         path="/recipes"
                         element={
