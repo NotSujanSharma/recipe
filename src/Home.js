@@ -17,7 +17,7 @@ const Home = () => {
                             onClick={() => navigate('/recipes')}
                         >
                             <div className="overflow-hidden rounded-t-lg h-200">
-                                <img src="https://assets.bonappetit.com/photos/5c2f8fe26558e92c8a622671/1:1/w_1920,c_limit/bolognese-1.jpg" className="h-[150px]" alt="Recipes" />
+                                <img src="https://assets.bonappetit.com/photos/5c2f8fe26558e92c8a622671/1:1/w_1920,c_limit/bolognese-1.jpg" className="h-[150px] w-full" alt="Recipes" />
                             </div>
                             <div className="p-4">
                                 <h3 className="text-xl font-semibold text-[#333333] mb-2">
@@ -30,7 +30,7 @@ const Home = () => {
                             onClick={() => navigate('/manuals')}
                         >
                             <div className="overflow-hidden rounded-t-lg h-200">
-                                <img src="https://www.sefiles.net/merchant/5418/images/site/Manual.JPG" className="h-[150px]" alt="Manuals" />
+                                <img src="https://www.sefiles.net/merchant/5418/images/site/Manual.JPG" className="h-[150px] " alt="Manuals" />
                             </div>
                             <div className="p-4">
                                 <h3 className="text-xl font-semibold text-[#333333] mb-2">
@@ -43,7 +43,7 @@ const Home = () => {
                             onClick={() => navigate('/guides')}
                         >
                             <div className="overflow-hidden rounded-t-lg">
-                                <img src="https://media.istockphoto.com/id/1343795805/vector/guide-with-colorful-bookmarks.jpg?s=612x612&w=0&k=20&c=fMfYIv-d31V6Rvwm7N7OXjdfAf_GLj3usxitJH7tdUM=" className="h-[150px]" alt="Guides" />
+                                <img src="https://media.istockphoto.com/id/1343795805/vector/guide-with-colorful-bookmarks.jpg?s=612x612&w=0&k=20&c=fMfYIv-d31V6Rvwm7N7OXjdfAf_GLj3usxitJH7tdUM=" className="h-[150px] w-full" alt="Guides" />
                             </div>
                             <div className="p-4">
                                 <h3 className="text-xl font-semibold text-[#333333] mb-2">
@@ -55,8 +55,8 @@ const Home = () => {
                             className="bg-white border border-[#CCCCCC] rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200 cursor-pointer"
                             onClick={() => navigate('/policies')}
                         >
-                            <div className="overflow-hidden rounded-t-lg">
-                                <img src="https://www.assentriskmanagement.co.uk/wp-content/uploads/2023/10/Which-Policies-do-I-need-to-Display-on-my-Website-scaled.jpeg" className="h-[150px]" alt="Guides" />
+                            <div className="overflow-hidden rounded-t-lg flex items-center justify-center">
+                                <img src="https://www.assentriskmanagement.co.uk/wp-content/uploads/2023/10/Which-Policies-do-I-need-to-Display-on-my-Website-scaled.jpeg" className="h-[150px] w-full" alt="Policies" />
                             </div>
                             <div className="p-4">
                                 <h3 className="text-xl font-semibold text-[#333333] mb-2">
