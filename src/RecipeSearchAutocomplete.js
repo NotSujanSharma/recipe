@@ -8,6 +8,7 @@ const RecipeSearchAutocomplete = ({ recipes, onSearch }) => {
         const filterSuggestions = () => {
             if (searchTerm.trim() === '') {
                 setSuggestions([]);
+                onSearch(''); // Clear search when input is empty
                 return;
             }
 
@@ -21,11 +22,17 @@ const RecipeSearchAutocomplete = ({ recipes, onSearch }) => {
         };
 
         filterSuggestions();
-    }, [searchTerm, recipes]);
+    }, [searchTerm, recipes, onSearch]);
 
     const handleSearch = (suggestion) => {
         setSearchTerm(suggestion.name);
         onSearch(suggestion.name);
+    };
+
+    const handleInputChange = (e) => {
+        const value = e.target.value;
+        setSearchTerm(value);
+        onSearch(value); // Update search results as user types
     };
 
     return (
@@ -34,7 +41,7 @@ const RecipeSearchAutocomplete = ({ recipes, onSearch }) => {
                 type="text"
                 placeholder="Search recipes..."
                 value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
+                onChange={handleInputChange}
                 className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
             />
 

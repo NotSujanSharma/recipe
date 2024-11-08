@@ -34,12 +34,16 @@ const RecipeList = () => {
   const categories = ["All", ...new Set(recipes.map(recipe => recipe.category))];
 
   const filteredRecipes = recipes.filter(recipe => {
-    const searchWords = searchTerm.toLowerCase().split(" ");
-    const recipeTitle = recipe.name.toLowerCase();
+    const matchesSearch = searchTerm.trim() === '' ? true :
+      searchTerm.toLowerCase().split(" ").every(word =>
+        recipe.name.toLowerCase().includes(word)
+      );
 
-    return searchWords.every(word => recipeTitle.includes(word));
+    const matchesCategory = selectedCategory === "All" ? true :
+      recipe.category === selectedCategory;
+
+    return matchesSearch && matchesCategory;
   });
-
 
   const handlePrint = (recipe) => {
     const printWindow = window.open("", "_blank");
@@ -132,7 +136,7 @@ const RecipeList = () => {
         </h1>
 
         <div className="mb-6">
-          <RecipeSearchAutocomplete recipes={filteredRecipes} onSearch={setSearchTerm} />
+          <RecipeSearchAutocomplete recipes={recipes} onSearch={setSearchTerm} />
         </div>
 
         <div className="mb-8">
