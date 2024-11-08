@@ -163,13 +163,16 @@ const RecipeList = () => {
               className="bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200"
             >
               <div
-                className="p-4 cursor-pointer"
+                className="p-1 cursor-pointer flex justify-between items-center"
                 onClick={() => setSelectedRecipe(recipe)}
               >
-                <h3 className="text-lg font-semibold text-gray-800 mb-2">
-                  {recipe.name}
-                </h3>
-                <p className="text-sm text-gray-500 mb-2">{recipe.category}</p>
+                <div className="p-3">
+                  <h3 className="text-lg font-semibold text-gray-800 mb-2">
+                    {recipe.name}
+                  </h3>
+                  <p className="text-sm text-gray-500 mb-2">{recipe.category}</p>
+                </div>
+                <div>{recipe.photo !== "null" && <img src={recipe.photo} alt={recipe.name} className="h-[6em] rounded-md" />}</div>
               </div>
             </div>
           ))}
