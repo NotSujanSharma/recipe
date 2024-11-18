@@ -10,12 +10,13 @@ export const AuthProvider = ({ children }) => {
   const verifyToken = async (authToken) => {
     if (!authToken) return false;
     try {
-      const response = await fetch('https://api.bigcityops.ca/verify-token', {
-        method: 'GET',
+      const response = await fetch('http://127.0.0.1:8000/token/verify/', {
+        method: 'POST',
         headers: {
-          'Authorization': `Bearer ${authToken}`,
+          'Authorization': `${authToken}`,
           'Content-Type': 'application/json'
-        }
+        },
+        body: JSON.stringify({ token: authToken }),
       });
 
       if (!response.ok) {
@@ -53,7 +54,7 @@ export const AuthProvider = ({ children }) => {
       formData.append('username', username);
       formData.append('password', password);
 
-      const response = await fetch('https://api.bigcityops.ca/token', {
+      const response = await fetch('http://127.0.0.1:8000/token/', {
         method: 'POST',
         body: formData,
       });
@@ -63,8 +64,8 @@ export const AuthProvider = ({ children }) => {
       }
 
       const data = await response.json();
-      setToken(data.access_token);
-      localStorage.setItem('token', data.access_token);
+      setToken(data.access);
+      localStorage.setItem('token', data.access);
       setUser({ username });
       return true;
     } catch (error) {

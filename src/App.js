@@ -9,7 +9,7 @@ import Home from './Home';
 const LoginRoute = ({ children }) => {
     const { token } = useAuth();
     if (token) {
-        return <Navigate to="/recipes" />;
+        return <Navigate to="/home" />;
     }
     return children
 }
