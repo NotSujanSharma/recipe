@@ -12,8 +12,8 @@ const LoginRoute = ({ children }) => {
     if (token) {
         return <Navigate to="/home" />;
     }
-    return children
-}
+    return children;
+};
 
 const PrivateRoute = ({ children }) => {
     const { token, isLoading } = useAuth();
@@ -29,6 +29,24 @@ const PrivateRoute = ({ children }) => {
     return <LocationCheck>{children}</LocationCheck>;
 };
 
+const AdminRoute = ({ children }) => {
+    const { token, user, isLoading } = useAuth();
+
+    if (isLoading) {
+        return <div>Loading...</div>;
+    }
+
+    if (!token) {
+        return <Navigate to="/login" />;
+    }
+
+    if (!user?.is_superuser) {
+        return <Navigate to="/home" />;
+    }
+
+    return <LocationCheck>{children}</LocationCheck>;
+};
+
 const App = () => {
     return (
         <AuthProvider>
@@ -37,14 +55,13 @@ const App = () => {
                     <Route
                         path="/admin"
                         element={
-                            <PrivateRoute>
+                            <AdminRoute>
                                 <AdminDashboard />
-                            </PrivateRoute>
+                            </AdminRoute>
                         }
                     />
                     <Route path="/login" element={
                         <LoginRoute>
-
                             <Login />
                         </LoginRoute>
                     } />

@@ -24,8 +24,7 @@ export const AuthProvider = ({ children }) => {
       }
 
       const data = await response.json();
-      // The response will contain the user object directly
-      setUser(data.user); // Will contain id, email, username, is_superuser
+      setUser(data.user); // Contains id, email, username, is_superuser
       return true;
     } catch (error) {
       console.error('Token verification failed:', error);
@@ -35,7 +34,6 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // Verify token on initial load and when token changes
   useEffect(() => {
     const validateToken = async () => {
       setIsLoading(true);
@@ -66,7 +64,9 @@ export const AuthProvider = ({ children }) => {
       const data = await response.json();
       setToken(data.access);
       localStorage.setItem('token', data.access);
-      setUser({ username });
+
+      // Verify token immediately after login to get full user data including is_superuser
+      await verifyToken(data.access);
       return true;
     } catch (error) {
       console.error('Login error:', error);
