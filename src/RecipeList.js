@@ -15,7 +15,7 @@ const RecipeList = () => {
   useEffect(() => {
     const fetchRecipes = async () => {
       try {
-        const response = await fetch('https://api.bigcityops.ca/recipes/', {
+        const response = await fetch('https://api.bigcityops.ca/recipes', {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
