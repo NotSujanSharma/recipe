@@ -26,7 +26,7 @@ const AdminDashboard = () => {
 
     const fetchRecipes = async () => {
         try {
-            const response = await fetch('http://127.0.0.1:8000/recipes', {
+            const response = await fetch('https://api.bigcityops.ca/recipes', {
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('token')}`
                 }
@@ -47,7 +47,7 @@ const AdminDashboard = () => {
 
     const fetchLocationSettings = async () => {
         try {
-            const response = await fetch('http://127.0.0.1:8000/api/admin/location-settings', {
+            const response = await fetch('https://api.bigcityops.ca/api/admin/location-settings', {
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('token')}`
                 }
@@ -76,7 +76,7 @@ const AdminDashboard = () => {
 
     const handleSaveLocationSettings = async () => {
         try {
-            const response = await fetch('http://127.0.0.1:8000/api/admin/location-settings', {
+            const response = await fetch('https://api.bigcityops.ca/api/admin/location-settings', {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -114,7 +114,7 @@ const AdminDashboard = () => {
         formData.append('file', file);
 
         try {
-            const response = await fetch('http://127.0.0.1:8000/api/admin/upload-recipe', {
+            const response = await fetch('https://api.bigcityops.ca/api/admin/upload-recipe', {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('token')}`
@@ -138,8 +138,8 @@ const AdminDashboard = () => {
         try {
             const response = await fetch(
                 selectedRecipe
-                    ? `http://127.0.0.1:8000/api/admin/recipes/${selectedRecipe.id}`
-                    : 'http://127.0.0.1:8000/api/admin/recipes',
+                    ? `https://api.bigcityops.ca/api/admin/recipes/${selectedRecipe.id}`
+                    : 'https://api.bigcityops.ca/api/admin/recipes',
                 {
                     method: selectedRecipe ? 'PUT' : 'POST',
                     headers: {
@@ -166,7 +166,7 @@ const AdminDashboard = () => {
 
     const handleDeleteConfirm = async (recipeId) => {
         try {
-            const response = await fetch(`http://127.0.0.1:8000/api/admin/recipes/${recipeId}`, {
+            const response = await fetch(`https://api.bigcityops.ca/api/admin/recipes/${recipeId}`, {
                 method: 'DELETE',
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('token')}`
@@ -251,8 +251,8 @@ const AdminDashboard = () => {
         <button
             onClick={onClick}
             className={`w-full flex items-center space-x-3 px-6 py-3 transition-colors ${active
-                    ? 'bg-blue-50 text-blue-600 border-r-4 border-blue-600'
-                    : 'text-gray-600 hover:bg-gray-50'
+                ? 'bg-blue-50 text-blue-600 border-r-4 border-blue-600'
+                : 'text-gray-600 hover:bg-gray-50'
                 }`}
         >
             {icon}
@@ -369,8 +369,8 @@ const AdminDashboard = () => {
                 {/* Status Messages */}
                 {error && (
                     <div className={`absolute top-4 right-4 z-50 ${error.type === 'success' ? 'bg-green-50 text-green-800 border-green-500' :
-                            error.type === 'error' ? 'bg-red-50 text-red-800 border-red-500' :
-                                'bg-blue-50 text-blue-800 border-blue-500'
+                        error.type === 'error' ? 'bg-red-50 text-red-800 border-red-500' :
+                            'bg-blue-50 text-blue-800 border-blue-500'
                         } border rounded-lg p-4 shadow-lg max-w-md`}>
                         {error.message}
                         <button
@@ -388,7 +388,7 @@ const AdminDashboard = () => {
                 {activeTab === 'settings' && (
                     <div className="p-6">
                         <h2 className="text-2xl font-bold text-gray-800 mb-6">Settings</h2>
-                        <p className="text-gray-600">Additional settings can be added here.</p>
+                        <p className="text-gray-600">Additional settings will be added here.</p>
                     </div>
                 )}
             </div>

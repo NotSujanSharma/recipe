@@ -10,7 +10,7 @@ export const AuthProvider = ({ children }) => {
   const verifyToken = async (authToken) => {
     if (!authToken) return false;
     try {
-      const response = await fetch('http://127.0.0.1:8000/token/verify/', {
+      const response = await fetch('https://api.bigcityops.ca/token/verify/', {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${authToken}`,
@@ -52,7 +52,7 @@ export const AuthProvider = ({ children }) => {
       formData.append('username', username);
       formData.append('password', password);
 
-      const response = await fetch('http://127.0.0.1:8000/token/', {
+      const response = await fetch('https://api.bigcityops.ca/token/', {
         method: 'POST',
         body: formData,
       });
