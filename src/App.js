@@ -5,6 +5,7 @@ import Login from './Login';
 import RecipeList from './RecipeList';
 import LocationCheck from './LocationCheck';
 import Home from './Home';
+import AdminDashboard from './AdminDashboard';
 
 const LoginRoute = ({ children }) => {
     const { token } = useAuth();
@@ -33,6 +34,14 @@ const App = () => {
         <AuthProvider>
             <Router>
                 <Routes>
+                    <Route
+                        path="/admin"
+                        element={
+                            <PrivateRoute>
+                                <AdminDashboard />
+                            </PrivateRoute>
+                        }
+                    />
                     <Route path="/login" element={
                         <LoginRoute>
 
