@@ -16,7 +16,7 @@ const AdminDashboard = () => {
         longitude: -79.47068943825747,
         radius_km: 9
     });
-    const [loading, setLoading] = useState(true);
+    // const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
     useEffect(() => {
@@ -41,7 +41,6 @@ const AdminDashboard = () => {
         } catch (err) {
             setError(err.message);
         } finally {
-            setLoading(false);
         }
     };
 
@@ -96,12 +95,12 @@ const AdminDashboard = () => {
         }
     };
 
-    const [formData, setFormData] = useState({
-        name: '',
-        category: '',
-        file: '',
-        photo: ''
-    });
+    // const [formData, setFormData] = useState({
+    //     name: '',
+    //     category: '',
+    //     file: '',
+    //     photo: ''
+    // });
 
     const handleFileUpload = async (e) => {
         const file = e.target.files[0];
