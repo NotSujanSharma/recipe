@@ -387,8 +387,8 @@ const AdminDashboard = () => {
                         value={searchTerm}
                         onChange={handleSearchChange}
                         className="w-full px-4 py-2 pl-10 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                        // Add these props to ensure focus is maintained
                         autoComplete="off"
+                        autoFocus
                         autoCorrect="off"
                         autoCapitalize="off"
                         spellCheck="false"
