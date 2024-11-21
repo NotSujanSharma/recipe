@@ -41,7 +41,7 @@ const AdminRoute = ({ children }) => {
     }
 
     if (!user?.is_superuser) {
-        return <Navigate to="/home" />;
+        return <Navigate to="/admin" />;
     }
 
     return <LocationCheck>{children}</LocationCheck>;

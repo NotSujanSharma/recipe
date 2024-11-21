@@ -1,8 +1,10 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from './AuthContext';
 
 const Home = () => {
     const navigate = useNavigate();
+    const { user } = useAuth();
 
     return (
         <div className="bg-[#F5F5F5] container mx-auto px-4 py-8 max-w-6xl">
@@ -12,6 +14,22 @@ const Home = () => {
                 </h1>
                 <div className="mb-6 flex flex-row">
                     <div className="grid grid-cols-2 md:grid-cols-3 gap-6 lg:grid-flow-col lg:auto-cols-max">
+                        {user?.is_superuser && (
+                            <div
+                                className="bg-white border border-[#CCCCCC] rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200 cursor-pointer"
+                                onClick={() => navigate('/admin')}
+                            >
+                                <div className="overflow-hidden rounded-t-lg h-200">
+                                    <img src="https://logodix.com/logo/1707094.png" className="h-[150px] w-full" alt="Admin" />
+                                </div>
+                                <div className="p-4">
+                                    <h3 className="text-xl font-semibold text-[#333333] mb-2">
+                                        Admin
+                                    </h3>
+                                </div>
+                            </div>
+                        )}
+
                         <div
                             className="bg-white border border-[#CCCCCC] rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200 cursor-pointer"
                             onClick={() => navigate('/recipes')}

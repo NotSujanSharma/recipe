@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { AlertCircle, Edit3, Trash2, Upload, Plus, MapPin, FileText, Settings } from 'lucide-react';
+import { useMemo, useCallback } from 'react';
+import { AlertCircle, Edit3, Trash2, Upload, Plus, MapPin, FileText, Settings, Menu, X } from 'lucide-react';
 import { Alert, AlertDescription, AlertTitle } from './Alert';
 
 import RecipeModal from './RecipeModal';
@@ -9,8 +10,10 @@ const AdminDashboard = () => {
     const [activeTab, setActiveTab] = useState('recipes');
     const [recipes, setRecipes] = useState([]);
     const [selectedRecipe, setSelectedRecipe] = useState(null);
+    const [searchTerm, setSearchTerm] = useState('');
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [locationSettings, setLocationSettings] = useState({
         latitude: 43.67671032048767,
         longitude: -79.47068943825747,
@@ -43,6 +46,7 @@ const AdminDashboard = () => {
         } finally {
         }
     };
+    
 
     const fetchLocationSettings = async () => {
         try {
@@ -72,7 +76,17 @@ const AdminDashboard = () => {
         setSelectedRecipe(recipe);
         setIsDeleteModalOpen(true);
     };
+    const filteredRecipes = useMemo(() =>
+        recipes.filter(recipe =>
+            recipe.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            recipe.category.toLowerCase().includes(searchTerm.toLowerCase())
+        ), [recipes, searchTerm]
+    );
 
+    const handleSearchChange = useCallback((e) => {
+        e.preventDefault();
+        setSearchTerm(e.target.value);
+    }, []);
     const handleSaveLocationSettings = async () => {
         try {
             const response = await fetch('https://api.bigcityops.ca/api/admin/location-settings', {
@@ -189,11 +203,11 @@ const AdminDashboard = () => {
     const RecipeCard = ({ recipe }) => (
         <div className="bg-white rounded-lg shadow-sm hover:shadow-md transition-all p-4 border border-gray-200">
             <div className="flex justify-between items-start">
-                <div>
-                    <h3 className="font-semibold text-lg text-gray-800">{recipe.name}</h3>
-                    <p className="text-sm text-gray-500 mt-1">{recipe.category}</p>
+                <div className="flex-1 min-w-0">
+                    <h3 className="font-semibold text-lg text-gray-800 truncate">{recipe.name}</h3>
+                    <p className="text-sm text-gray-500 mt-1 truncate">{recipe.category}</p>
                 </div>
-                <div className="flex gap-2">
+                <div className="flex gap-2 ml-2 shrink-0">
                     <button
                         onClick={() => handleEditRecipe(recipe)}
                         className="p-2 text-blue-600 hover:bg-blue-50 rounded-full transition-colors"
@@ -219,32 +233,54 @@ const AdminDashboard = () => {
     );
 
     const Sidebar = () => (
-        <div className="w-64 bg-white h-full shadow-lg border-r border-gray-200">
-            <div className="p-6">
+        <div className={`
+            fixed inset-y-0 left-0 z-30 transform
+            lg:relative lg:translate-x-0
+            w-64 bg-white shadow-lg border-r border-gray-200
+            transition-transform duration-300 ease-in-out
+            ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'}
+        `}>
+            <div className="p-6 flex justify-between items-center">
                 <h1 className="text-2xl font-bold text-gray-800">Admin Panel</h1>
+                <button
+                    onClick={() => setIsSidebarOpen(false)}
+                    className="lg:hidden text-gray-500 hover:text-gray-700"
+                >
+                    <X size={24} />
+                </button>
             </div>
             <nav className="mt-6">
                 <SidebarLink
                     icon={<FileText size={20} />}
                     label="Recipes"
                     active={activeTab === 'recipes'}
-                    onClick={() => setActiveTab('recipes')}
+                    onClick={() => {
+                        setActiveTab('recipes');
+                        setIsSidebarOpen(false);
+                    }}
                 />
                 <SidebarLink
                     icon={<MapPin size={20} />}
                     label="Location Settings"
                     active={activeTab === 'location'}
-                    onClick={() => setActiveTab('location')}
+                    onClick={() => {
+                        setActiveTab('location');
+                        setIsSidebarOpen(false);
+                    }}
                 />
                 <SidebarLink
                     icon={<Settings size={20} />}
                     label="Settings"
                     active={activeTab === 'settings'}
-                    onClick={() => setActiveTab('settings')}
+                    onClick={() => {
+                        setActiveTab('settings');
+                        setIsSidebarOpen(false);
+                    }}
                 />
             </nav>
         </div>
     );
+
 
     const SidebarLink = ({ icon, label, active, onClick }) => (
         <button
@@ -260,8 +296,8 @@ const AdminDashboard = () => {
     );
 
     const LocationSettingsPanel = () => (
-        <div className="p-6 max-w-2xl">
-            <h2 className="text-2xl font-bold text-gray-800 mb-6">Location Settings</h2>
+        <div className="p-4 sm:p-6 max-w-2xl mx-auto">
+            <h2 className="text-xl sm:text-2xl font-bold text-gray-800 mb-6">Location Settings</h2>
             <div className="space-y-6">
                 <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -316,13 +352,13 @@ const AdminDashboard = () => {
     );
 
     const RecipePanel = () => (
-        <div className="p-6">
-            <div className="flex justify-between items-center mb-6">
-                <h2 className="text-2xl font-bold text-gray-800">Recipes</h2>
-                <div className="flex gap-3">
-                    <label className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors cursor-pointer">
+        <div className="p-4 sm:p-6">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+                <h2 className="text-xl sm:text-2xl font-bold text-gray-800">Recipes</h2>
+                <div className="flex flex-wrap gap-3 w-full sm:w-auto">
+                    <label className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors cursor-pointer flex-1 sm:flex-none justify-center">
                         <Upload size={20} />
-                        Upload DOCX
+                        <span className="whitespace-nowrap">Upload DOCX</span>
                         <input
                             type="file"
                             accept=".docx"
@@ -335,39 +371,107 @@ const AdminDashboard = () => {
                             setSelectedRecipe(null);
                             setIsModalOpen(true);
                         }}
-                        className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors"
+                        className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors flex-1 sm:flex-none justify-center"
                     >
                         <Plus size={20} />
-                        New Recipe
+                        <span className="whitespace-nowrap">New Recipe</span>
                     </button>
                 </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {recipes.map((recipe) => (
+            <div className="mb-6">
+                <div className="relative">
+                    <input
+                        type="text"
+                        placeholder="Search recipes by name or category..."
+                        value={searchTerm}
+                        onChange={handleSearchChange}
+                        className="w-full px-4 py-2 pl-10 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        // Add these props to ensure focus is maintained
+                        autoComplete="off"
+                        autoCorrect="off"
+                        autoCapitalize="off"
+                        spellCheck="false"
+                    />
+                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="h-5 w-5"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                        >
+                            <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                            />
+                        </svg>
+                    </span>
+                    {searchTerm && (
+                        <button
+                            onClick={() => setSearchTerm('')}
+                            className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                        >
+                            <X size={18} />
+                        </button>
+                    )}
+                </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+                {filteredRecipes.map((recipe) => (
                     <RecipeCard key={recipe.id} recipe={recipe} />
                 ))}
             </div>
 
-            {recipes.length === 0 && (
+            {filteredRecipes.length === 0 && (
                 <Alert className="mt-6">
                     <AlertCircle className="h-4 w-4" />
-                    <AlertTitle>No recipes found</AlertTitle>
+                    <AlertTitle>
+                        {searchTerm
+                            ? 'No recipes found matching your search'
+                            : 'No recipes found'}
+                    </AlertTitle>
                     <AlertDescription>
-                        Start by uploading a DOCX file or creating a new recipe manually.
+                        {searchTerm
+                            ? 'Try adjusting your search terms or clear the search'
+                            : 'Start by uploading a DOCX file or creating a new recipe manually.'}
                     </AlertDescription>
                 </Alert>
             )}
         </div>
     );
-
     return (
-        <div className="flex h-screen bg-gray-50">
+        <div className="flex flex-col lg:flex-row min-h-screen bg-gray-50">
+            {/* Mobile Header */}
+            <div className="lg:hidden flex items-center justify-between p-4 bg-white border-b border-gray-200">
+                <h1 className="text-xl font-bold text-gray-800">Admin Panel</h1>
+                <button
+                    onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+                    className="text-gray-500 hover:text-gray-700"
+                >
+                    <Menu size={24} />
+                </button>
+            </div>
+
+            {/* Sidebar */}
             <Sidebar />
-            <div className="flex-1 overflow-auto relative">
+
+            {/* Overlay for mobile sidebar */}
+            {isSidebarOpen && (
+                <div
+                    className="fixed inset-0 bg-black bg-opacity-50 z-20 lg:hidden"
+                    onClick={() => setIsSidebarOpen(false)}
+                />
+            )}
+
+            {/* Main Content */}
+            <div className="flex-1 relative">
                 {/* Status Messages */}
                 {error && (
-                    <div className={`absolute top-4 right-4 z-50 ${error.type === 'success' ? 'bg-green-50 text-green-800 border-green-500' :
+                    <div className={`fixed top-4 right-4 z-50 ${error.type === 'success' ? 'bg-green-50 text-green-800 border-green-500' :
                         error.type === 'error' ? 'bg-red-50 text-red-800 border-red-500' :
                             'bg-blue-50 text-blue-800 border-blue-500'
                         } border rounded-lg p-4 shadow-lg max-w-md`}>
@@ -381,12 +485,12 @@ const AdminDashboard = () => {
                     </div>
                 )}
 
-                {/* Main Content */}
+                {/* Content Panels */}
                 {activeTab === 'recipes' && <RecipePanel />}
                 {activeTab === 'location' && <LocationSettingsPanel />}
                 {activeTab === 'settings' && (
-                    <div className="p-6">
-                        <h2 className="text-2xl font-bold text-gray-800 mb-6">Settings</h2>
+                    <div className="p-4 sm:p-6">
+                        <h2 className="text-xl sm:text-2xl font-bold text-gray-800 mb-6">Settings</h2>
                         <p className="text-gray-600">Additional settings will be added here.</p>
                     </div>
                 )}
@@ -414,6 +518,7 @@ const AdminDashboard = () => {
             />
         </div>
     );
+
 };
 
 export default AdminDashboard;
